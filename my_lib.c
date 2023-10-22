@@ -125,4 +125,67 @@ char *my_strchr(const char *str, int c) {
     }
 
     return NULL;
+}struct my_stack *my_stack_init (int size){
+    struct my_stack *new_stack = malloc(sizeof(struct my_stack));
+    if (!new_stack) {
+        // Manejo de error en caso de que malloc falle
+        fprintf(stderr, "Error reservando memoria\n");
+        exit(EXIT_FAILURE);
+    }
+    new_stack->size = size;
+    new_stack->top = NULL;
+    return new_stack;
+}
+#define SUCCESS 0
+#define FAILURE -1
+int my_stack_push (struct my_stack *stack, void *data){
+    if (!stack)
+    {
+        fprintf(stderr, "Error, my_stack es null \n");
+        return -1; 
+    }    
+    if (stack->size == 0)
+    {
+        fprintf(stderr, "Error, my_stack tiene size 0!\n");
+        return -1; 
+    }    
+    struct my_stack_node *new_stack_node = malloc(sizeof(struct my_stack_node));
+    if (!new_stack_node) {
+        fprintf(stderr, "Error de asignación de memoria al nuevo nodo\n");
+        return -1;
+    }
+    new_stack_node->data=data; 
+    new_stack_node->next=stack->top; 
+    stack->top=new_stack_node;  
+    return 0; 
+}
+void *my_stack_pop (struct my_stack *stack){
+     if (stack == NULL || stack->top == NULL) {
+        fprintf(stderr, "Error: Intento de hacer pop en una pila vacía o no inicializada\n");
+        return NULL;
+    }
+    void *datos = stack->top->data; 
+    struct my_stack_node *siguiente = stack->top->next;
+    free(stack->top);  
+    stack->top = siguiente; 
+    return datos; 
+}
+int my_stack_len(struct my_stack *stack) {
+    if (stack == NULL) {
+        fprintf(stderr, "Error: La pila es NULL\n");
+        return -0;  
+    }
+
+    int contador = 0; 
+    struct my_stack_node *new_stack_node = stack->top;
+
+    while (new_stack_node != NULL) {
+        contador++; 
+        new_stack_node = new_stack_node->next;
+    }
+
+    return contador; 
+}
+int my_stack_purge (struct my_stack *stack){
+    
 }
