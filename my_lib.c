@@ -187,5 +187,17 @@ int my_stack_len(struct my_stack *stack) {
     return contador; 
 }
 int my_stack_purge (struct my_stack *stack){
+    int contador = 0; 
+    if (stack == NULL) {
+        fprintf(stderr, "Error: La pila es NULL\n");
+        return -0;  
+    }
+    struct new_stack_node *aux_stack_node = my_stack_pop(stack);
+    contador+=16; 
+    while (aux_stack_node)
+    {
+        aux_stack_node = my_stack_pop(stack);
+        contador+=16; 
+    }
     
 }
