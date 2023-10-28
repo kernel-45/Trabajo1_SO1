@@ -20,10 +20,10 @@ La función my_strcmp compara dos cadenas de caracteres apuntadas por los punter
 "str1" y "str2". Itera sobre cada par de caracteres correspondientes de ambas cadenas,
 incrementando los punteros hasta que encuentra un par de caracteres que no coinciden
 o hasta que se llega al final de alguna de las cadenas.
-Hace un return de la diferencia entre los dos primeros carácteres que no coinciden. 
-Si las cadenas son iguales, la función devuelve 0. 
+Hace un return de la diferencia entre los dos primeros carácteres que no coinciden.
+Si las cadenas son iguales, la función devuelve 0.
 La comparación se hace usando "unsigned char" porque si no se pueden interpretar
-los carácteres que empiezan por "1" como un número negativo al hacer el casting. 
+los carácteres que empiezan por "1" como un número negativo al hacer el casting.
 */
 int my_strcmp(const char *str1, const char *str2)
 {
@@ -35,10 +35,10 @@ int my_strcmp(const char *str1, const char *str2)
     return ((unsigned char)*str1 - (unsigned char)*str2);
 }
 /*
-La función my_strcpy copia la cadena de caracteres apuntada por "src" a la ubicación 
-apuntada por "dest". El puntero original a "dest" se guarda para retornarlo al final, 
-permitiendo encadenar esta operación con otras. El bucle copia carácter por carácter 
-hasta encontrar el carácter nulo '\0' que indica el final de "src". 
+La función my_strcpy copia la cadena de caracteres apuntada por "src" a la ubicación
+apuntada por "dest". El puntero original a "dest" se guarda para retornarlo al final,
+permitiendo encadenar esta operación con otras. El bucle copia carácter por carácter
+hasta encontrar el carácter nulo '\0' que indica el final de "src".
 Posteriormente, se añade un carácter nulo al final de "dest".
 */
 char *my_strcpy(char *dest, const char *src)
@@ -55,10 +55,10 @@ char *my_strcpy(char *dest, const char *src)
 }
 /*
 La función my_strncpy copia hasta "n" caracteres de la cadena "src" a "dest",
-asegurándose de que "dest" es una cadena de caracteres terminada en nulo. 
-Si la longitud de "src" es menor a "n", "dest" se rellena con caracteres nulos 
+asegurándose de que "dest" es una cadena de caracteres terminada en nulo.
+Si la longitud de "src" es menor a "n", "dest" se rellena con caracteres nulos
 hasta alcanzar "n" caracteres en total. La posición original de "dest" se guarda
-para poder retornarla, permitiendo operaciones encadenadas. 
+para poder retornarla, permitiendo operaciones encadenadas.
 */
 char *my_strncpy(char *dest, const char *src, size_t n)
 {
@@ -79,9 +79,9 @@ char *my_strncpy(char *dest, const char *src, size_t n)
     return og_dest;
 }
 /*
-La función my_strcat concatena la cadena "src" al final de la cadena "dest". 
-Primero, encuentra el final de "dest" avanzando el puntero hasta el carácter nulo '\0'. 
-Luego, copia los carácteres de "src" a "dest", incluyendo el carácter nulo final de "src". 
+La función my_strcat concatena la cadena "src" al final de la cadena "dest".
+Primero, encuentra el final de "dest" avanzando el puntero hasta el carácter nulo '\0'.
+Luego, copia los carácteres de "src" a "dest", incluyendo el carácter nulo final de "src".
 El puntero original a "dest" se guarda y se retorna..
 */
 char *my_strcat(char *dest, const char *src)
@@ -89,45 +89,52 @@ char *my_strcat(char *dest, const char *src)
     char *og_dest = dest;
     while (*dest)
     {
-        dest++; 
+        dest++;
     }
     while (*src)
     {
-        *dest = *src; 
+        *dest = *src;
         dest++;
-        src++; 
+        src++;
     }
     *dest = '\0';
-    return og_dest; 
+    return og_dest;
 }
 /*
-La función my_strchr busca la primera ocurrencia del carácter "c" en la cadena "str". 
-Convierte "c" a tipo char para asegurar una comparación adecuada. Itera sobre "str", 
-comparando cada carácter con "c" hasta encontrar una coincidencia o llegar al final de 
-la cadena. Si encuentra "c", retorna un puntero al carácter coincidente en "str". 
+La función my_strchr busca la primera ocurrencia del carácter "c" en la cadena "str".
+Convierte "c" a tipo char para asegurar una comparación adecuada. Itera sobre "str",
+comparando cada carácter con "c" hasta encontrar una coincidencia o llegar al final de
+la cadena. Si encuentra "c", retorna un puntero al carácter coincidente en "str".
 Si "c" es el carácter nulo '\0', verifica si ha llegado al final de "str" y, de ser así,
  retorna un puntero a este carácter nulo. Si no encuentra "c", retorna NULL.
 */
-char *my_strchr(const char *str, int c) {
+char *my_strchr(const char *str, int c)
+{
     // Convertir c a char para la comparación
     char ch = (char)c;
-    
-    while (*str) {
-        if (*str == ch) {
+
+    while (*str)
+    {
+        if (*str == ch)
+        {
             return (char *)str;
         }
         str++;
     }
-    
+
     // Verificar si c es '\0'
-    if (ch == '\0') {
+    if (ch == '\0')
+    {
         return (char *)str;
     }
 
     return NULL;
-}struct my_stack *my_stack_init (int size){
+}
+struct my_stack *my_stack_init(int size)
+{
     struct my_stack *new_stack = malloc(sizeof(struct my_stack));
-    if (!new_stack) {
+    if (!new_stack)
+    {
         // Manejo de error en caso de que malloc falle
         fprintf(stderr, "Error reservando memoria\n");
         exit(EXIT_FAILURE);
@@ -138,66 +145,90 @@ char *my_strchr(const char *str, int c) {
 }
 #define SUCCESS 0
 #define FAILURE -1
-int my_stack_push (struct my_stack *stack, void *data){
+int my_stack_push(struct my_stack *stack, void *data)
+{
     if (!stack)
     {
         fprintf(stderr, "Error, my_stack es null \n");
-        return -1; 
-    }    
+        return -1;
+    }
     if (stack->size == 0)
     {
         fprintf(stderr, "Error, my_stack tiene size 0!\n");
-        return -1; 
-    }    
+        return -1;
+    }
     struct my_stack_node *new_stack_node = malloc(sizeof(struct my_stack_node));
-    if (!new_stack_node) {
+    if (!new_stack_node)
+    {
         fprintf(stderr, "Error de asignación de memoria al nuevo nodo\n");
         return -1;
     }
-    new_stack_node->data=data; 
-    new_stack_node->next=stack->top; 
-    stack->top=new_stack_node;  
-    return 0; 
+    new_stack_node->data = data;
+    new_stack_node->next = stack->top;
+    stack->top = new_stack_node;
+    return 0;
 }
-void *my_stack_pop (struct my_stack *stack){
-     if (stack == NULL || stack->top == NULL) {
+void *my_stack_pop(struct my_stack *stack)
+{
+    if (stack == NULL)
+    {
         fprintf(stderr, "Error: Intento de hacer pop en una pila vacía o no inicializada\n");
         return NULL;
     }
-    void *datos = stack->top->data; 
+    if (stack->top == NULL)
+    {
+        return NULL;
+    }
+    void *datos = stack->top->data;
     struct my_stack_node *siguiente = stack->top->next;
-    free(stack->top);  
-    stack->top = siguiente; 
-    return datos; 
+    free(stack->top);
+    stack->top = siguiente;
+    return datos;
 }
-int my_stack_len(struct my_stack *stack) {
-    if (stack == NULL) {
+int my_stack_len(struct my_stack *stack)
+{
+    if (stack == NULL)
+    {
         fprintf(stderr, "Error: La pila es NULL\n");
-        return -0;  
+        return -0;
     }
 
-    int contador = 0; 
+    int contador = 0;
     struct my_stack_node *new_stack_node = stack->top;
 
-    while (new_stack_node != NULL) {
-        contador++; 
+    while (new_stack_node != NULL)
+    {
+        contador++;
         new_stack_node = new_stack_node->next;
     }
 
-    return contador; 
+    return contador;
 }
-int my_stack_purge (struct my_stack *stack){
-    int contador = 0; 
-    if (stack == NULL) {
-        fprintf(stderr, "Error: La pila es NULL\n");
-        return -0;  
+int my_stack_purge(struct my_stack *stack) //por cada nodo eliminamos 1 size de cuando inicializamos la pila + los punteros
+{
+     int contador = 0;
+    while(stack->top){
+        struct my_stack_node *nodo_aux;
+        nodo_aux = stack->top;
+        free(stack->top); 
+        stack->top = nodo_aux->next;
+        contador += sizeof(*nodo_aux);
+        contador += stack->size;
+        free(nodo_aux);
     }
-    struct new_stack_node *aux_stack_node = my_stack_pop(stack);
-    contador+=16; 
-    while (aux_stack_node)
-    {
-        aux_stack_node = my_stack_pop(stack);
-        contador+=16; 
-    }
-    
+    contador += sizeof(*stack);
+    free(stack);
+
+    return contador;
 }
+//Open sirve para abrir o crear ficheros
+//hay que poner permiso de escritura a los usuarios (el codigo esta en el documento)
+//SIEMPRE HAY QUE USAR EL CLOSE
+//write: 3 parametros, el file descriptor (que nos devuelve el open), el contenedor
+//en que ponemos lo que queremos escribir en el fichero y el tamaño. 
+//en el fichero solo almacenaremos el size y los datos en si, para nada los punteros 
+//size ocupa sizeof(integer) (4 bytes), el *data ocupa (size)
+//Queremos escribir en el fichero desde el ultimo elemento de la pila hasta el primero, porque
+//es lifo y cuando queramos leerla asi sera mejor. Habrá que hacer malloc.
+//El write tiene que devolver el numero de elementos almacenados (el size no cuenta)
+// HACER CONTROL DE ERRORES (hay un documento que lo explica)
