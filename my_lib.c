@@ -221,6 +221,46 @@ int my_stack_purge(struct my_stack *stack) //por cada nodo eliminamos 1 size de 
 
     return contador;
 }
+int my_stack_write (struct my_stack *stack, char *filename){
+    //Abrimos el fichero
+FILE *file;
+    file = open(*filename, "w");  // Abrir el archivo en modo escritura
+
+    if (file == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return 1;
+    }
+    //Creamos una pila auxiliar
+    struct my_stack *pila_aux = my_stack_init(stack->size); 
+    if(!stack){
+        printf("Error, pila vacía.\n");
+        return 1; 
+    }
+    //Guardamos el size
+    pila_aux->size = stack->size; 
+    //Creamos un nodo auxiliar para recorrer la otra pila
+    //sin modificarla
+    struct my_stack_node *nodo_aux;
+    nodo_aux = stack->top;
+    //Mientras haya elementos en la pila inicial
+    while (nodo_aux)
+    {
+        //Los metemos en la pila auxiliar
+        my_stack_push(pila_aux, nodo_aux->data); 
+        nodo_aux = nodo_aux->next; 
+    }
+    size_t elementos_escritos;
+    //Escribimos el size de los datos en el fichero
+    elementos_escritos += fwrite(stack->size, sizeof(int), 1, file);
+    //Mientras queden datos por escribir los escribimos
+    while (pila_aux->top)
+    {
+        elementos_escritos += fwrite(my_stack_pop(pila_aux), stack->size, 1, file);
+    }
+    close(file);  // Cerrar el archivo
+    return elementos_escritos;
+}
+ 
 //Open sirve para abrir o crear ficheros
 //hay que poner permiso de escritura a los usuarios (el codigo esta en el documento)
 //SIEMPRE HAY QUE USAR EL CLOSE
