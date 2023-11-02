@@ -3,9 +3,9 @@
  * It's required to declare the functions and types in my_lib.h
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
+include <stdio.h>
+include <string.h>
+include <math.h>
 
 #include "my_lib.h"
 
