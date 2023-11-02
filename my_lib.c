@@ -260,7 +260,40 @@ int fd = open(filename, O_WRONLY|O_CREAT|O_TRUNC);
 }
 struct my_stack *my_stack_read (char *filename){
     int fd = open(filename, O_RDONLY);
-    
+
+    //Controlar error obrir fitxer
+    if (fd == -1) {
+        perror("Error al abrir el archivo");
+        return NULL;
+    }
+    //recuperar el size per saver el tamany de les dades
+    int size = read(fd, &size, sizeof(int));
+    //inicialitzar la pila
+    struct my_stack *stack = my_stack_init(size);
+    //reservar espai per guardar dades
+    void *data = malloc(size);
+    //comprovar error malloc
+    if (data == NULL)
+    {
+        fprintf(stderr, "No queda espai en memoria.\n");
+        return NULL;
+    }
+    //bucle que ens llegeix tots els nodes i va fent el push a la pila
+    while(read(fd, data, size) > 0){
+        //push dades llegides
+        my_stack_push(stack, data);
+        //reservar memoria per el seguent
+        data = malloc(size);
+        //comprovar error malloc
+        if (data == NULL)
+        {
+        fprintf(stderr, "No queda espai en memoria.\n");
+        return NULL;
+        }       
+    }
+    close(fd);
+    free(data);
+    return stack;    
 }
  
 //Open sirve para abrir o crear ficheros
